@@ -10,15 +10,11 @@ function! s:unite_source.gather_candidates(args, context)
     let list = split(glob('/Library/Fonts/*'), "\n")
     call map(list, "fnamemodify(v:val, ':t:r')")
   elseif executable('fc-list')
-    if has('win32') || has('win64')
-      " 'fc-list' for win32 is included 'gtk win32 runtime'.
-      " see: http://www.gtk.org/download-windows.html
-      let list = split(iconv(system('fc-list :spacing=mono'), 'utf-8', &encoding), "\n")
-      if v:lang == 'ja' || v:lang == 'ko' || v:lang =~ '^zh-' " CJK
-        let list += split(iconv(system('fc-list :spacing=90'), 'utf-8', &encoding), "\n")
-      endif
-    else
-      let list = split(system('fc-list :spacing=mono'), "\n")
+    " 'fc-list' for win32 is included 'gtk win32 runtime'.
+    " see: http://www.gtk.org/download-windows.html
+    let list = split(iconv(system('fc-list :spacing=mono'), 'utf-8', &encoding), "\n")
+    if v:lang =~ '^\(ja\|ko\|zh\)' 
+      let list += split(iconv(system('fc-list :spacing=90'), 'utf-8', &encoding), "\n")
     endif
     call map(list, "substitute(v:val, '[:,].*', '', '')")
   else
