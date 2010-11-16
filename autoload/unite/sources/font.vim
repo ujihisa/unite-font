@@ -10,14 +10,12 @@ function! s:unite_source.gather_candidates(args, context)
         \ split(glob('/Library/Fonts/*'), "\n") :
         \ ['Menlo', 'Andale Mono'] " FIXME
   call map(list, "fnamemodify(v:val, ':t:r')")
-  call map(list, "[v:val, substitute(v:val, ' ', '\\\\ ', 'g')]")
-  " list is like [("Andale Mono", "Andale\ Mono"), ...]
 
   return map(list, '{
-        \ "word": v:val[0],
+        \ "word": v:val,
         \ "source": "font",
         \ "kind": "command",
-        \ "action__command": "set guifont=" . v:val[1],
+        \ "action__command": "let &guifont=" . string(v:val),
         \ }')
 endfunction
 
