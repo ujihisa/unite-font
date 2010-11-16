@@ -22,7 +22,7 @@ function! s:unite_source.gather_candidates(args, context)
 endfunction
 
 function! unite#sources#font#define()
-  return has('gui') ? s:unite_source : []
+  return has('gui_running') ? s:unite_source : []
 endfunction
 
 let &cpo = s:save_cpo
