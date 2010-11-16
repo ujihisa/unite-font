@@ -6,10 +6,18 @@ let s:unite_source = {
       \ }
 
 function! s:unite_source.gather_candidates(args, context)
-  let list = has('gui_macvim') ?
-        \ split(glob('/Library/Fonts/*'), "\n") :
-        \ ['Menlo', 'Andale Mono'] " FIXME
-  call map(list, "fnamemodify(v:val, ':t:r')")
+  if has('gui_macvim')
+    let list = split(glob('/Library/Fonts/*'), "\n")
+    call map(list, "fnamemodify(v:val, ':t:r')")
+  elseif executable('fc-list')
+    let list = split(system('fc-list'), "\n")
+    call map(list, "substitute(v:val, ':.*', '', '')")
+  else
+    echoerr 'Your environment does not support the current version of unite-font.'
+    finish
+  endif
+  call map(list, "[v:val, substitute(v:val, ' ', '\\\\ ', 'g')]")
+  " list is like [("Andale Mono", "Andale\ Mono"), ...]
 
   return map(list, '{
         \ "word": v:val,
