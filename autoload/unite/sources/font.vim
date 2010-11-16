@@ -16,8 +16,6 @@ function! s:unite_source.gather_candidates(args, context)
     echoerr 'Your environment does not support the current version of unite-font.'
     finish
   endif
-  call map(list, "[v:val, substitute(v:val, ' ', '\\\\ ', 'g')]")
-  " list is like [("Andale Mono", "Andale\ Mono"), ...]
 
   return map(list, '{
         \ "word": v:val,
