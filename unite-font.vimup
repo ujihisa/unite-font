@@ -12,5 +12,6 @@
 "install_details": |
   After you install Shougo's unite.vim, unarchive the zip file into a directory that is under &rtp of your Vim, including ~/.vim dir.
 "versions":
+  - '1.1': Supports gtk gvim like Windows version or Linux version besides Mac OS X. Thanks thinca, mattn and shougo.
   - '1.0': Initial upload
 # vim: filetype=yaml
