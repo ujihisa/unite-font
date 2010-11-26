@@ -8,6 +8,8 @@ let s:unite_source = {
 function! s:unite_source.gather_candidates(args, context)
   if has('gui_macvim')
     let list = split(glob('/Library/Fonts/*'), "\n")
+    let list = extend(list, split(glob('/System/Library/Fonts/*'), "\n"))
+    let list = extend(list, split(glob('~/Library/Fonts/*'), "\n"))
     call map(list, "fnamemodify(v:val, ':t:r')")
   elseif executable('fc-list')
     " 'fc-list' for win32 is included 'gtk win32 runtime'.
