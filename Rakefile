@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'pathname'
 
-files = Dir.glob('**/*.{vim,txt}').map {|f| Pathname(f) }
+files = Dir.glob('**/{*.{vim,txt,cpp,exe},Makefile}').map {|f| Pathname(f) }
 name = 'unite-font'
 
 desc 'generate zip archive of the project, asking you the version'
