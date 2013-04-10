@@ -3,8 +3,22 @@ set cpo&vim
 
 let s:unite_source = {
       \ 'name': 'font',
+      \ 'hooks': {},
       \ 'action_table': {'*': {}},
       \ }
+
+function! s:unite_source.hooks.on_init(args, context)
+  let s:initial_guifont = &guifont
+endfunction
+
+function! s:unite_source.hooks.on_close(args, context)
+  if s:initial_guifont == &guifont
+    unlet s:initial_guifont
+    return
+  endif
+  let &guifont = s:initial_guifont
+  unlet s:initial_guifont
+endfunction
 
 function! s:unite_source.gather_candidates(args, context)
   if has('gui_macvim')
@@ -28,17 +42,17 @@ function! s:unite_source.gather_candidates(args, context)
   endif
 
   return map(list, '{
-        \ "word": v:val,
-        \ "source": "font",
-        \ "kind": "command",
-        \ "action__command": "let &guifont=" . string(v:val),
-        \ }')
+  \ "word": v:val,
+  \ "source": "font",
+  \ "kind": "command",
+  \ "action__command": "let &guifont=" . string(v:val),
+  \ }')
 endfunction
 
 let s:unite_source.action_table['*'].preview = {
-      \ 'description' : 'preview this font',
-      \ 'is_quit' : 0,
-      \ }
+\ 'description' : 'preview this font',
+\ 'is_quit' : 0,
+\ }
 
 function! s:unite_source.action_table['*'].preview.func(candidate)
   execute a:candidate.action__command
