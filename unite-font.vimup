@@ -5,13 +5,14 @@
 "required_vim_version": '7.3'
 "summary": A Unite.vim plugin for changing your font.
 "detailed_description": |
-  A Unite.vim plugin for changing your font. See details in the following pages. 
+  A Unite.vim plugin for changing your font. See details in the following pages.
 
-  * http://github.com/ujihisa/unite-font (development) 
+  * http://github.com/ujihisa/unite-font (development)
   * https://github.com/shougo/unite.vim (unite core)
 "install_details": |
   After you install Shougo's unite.vim, unarchive the zip file into a directory that is under &rtp of your Vim, including ~/.vim dir.
 "versions":
+  - '1.4': Supports unite's auto-preview. Thanks Zhao Cai.
   - '1.3': Supports more fonts on Windows, with using C external program. Thanks anekos.
   - '1.2': Adding missing font dirs for Mac OS X
   - '1.1': Supports gtk gvim like Windows version or Linux version besides Mac OS X. Thanks thinca, mattn and shougo.
