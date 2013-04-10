@@ -3,6 +3,7 @@ set cpo&vim
 
 let s:unite_source = {
       \ 'name': 'font',
+      \ 'action_table': {'*': {}},
       \ }
 
 function! s:unite_source.gather_candidates(args, context)
@@ -32,6 +33,15 @@ function! s:unite_source.gather_candidates(args, context)
         \ "kind": "command",
         \ "action__command": "let &guifont=" . string(v:val),
         \ }')
+endfunction
+
+let s:unite_source.action_table['*'].preview = {
+      \ 'description' : 'preview this font',
+      \ 'is_quit' : 0,
+      \ }
+
+function! s:unite_source.action_table['*'].preview.func(candidate)
+  execute a:candidate.action__command
 endfunction
 
 function! unite#sources#font#define()
