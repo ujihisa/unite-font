@@ -21,7 +21,7 @@ function! s:unite_source.hooks.on_close(args, context)
 endfunction
 
 function! s:unite_source.gather_candidates(args, context)
-  let initial_guifont_size = split(&guifont, ' ')[-1]
+  let initial_guifont_size = ''
   if has('gui_macvim')
     let list = split(glob('/Library/Fonts/*'), "\n")
     let list = extend(list, split(glob('/System/Library/Fonts/*'), "\n"))
@@ -38,6 +38,7 @@ function! s:unite_source.gather_candidates(args, context)
     endif
     call map(list, "substitute(v:val, '^.*: ', '', '')")
     call map(list, "substitute(v:val, '[:,].*', '', '')")
+    let initial_guifont_size = ' ' . split(&guifont, ' ')[-1]
   else
     echoerr 'Your environment does not support the current version of unite-font.'
     finish
@@ -47,7 +48,7 @@ function! s:unite_source.gather_candidates(args, context)
   \ "word": v:val,
   \ "source": "font",
   \ "kind": "command",
-  \ "action__command": "let &guifont=" . string(v:val . " " . initial_guifont_size),
+  \ "action__command": "let &guifont=" . string(v:val  . initial_guifont_size),
   \ }')
 endfunction
 
