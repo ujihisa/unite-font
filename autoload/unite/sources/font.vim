@@ -32,10 +32,11 @@ function! s:unite_source.gather_candidates(args, context)
     " 'fc-list' for win32 is included 'gtk win32 runtime'.
     " see: http://www.gtk.org/download-windows.html
     let list = split(iconv(system('fc-list :spacing=mono'), 'utf-8', &encoding), "\n")
-    if v:lang =~ '^\(ja\|ko\|zh\)' 
+    if v:lang =~ '^\(ja\|ko\|zh\)'
       let list += split(iconv(system('fc-list :spacing=90'), 'utf-8', &encoding), "\n")
     endif
-    call map(list, "substitute(v:val, '[:,].*', '', '')")
+    let font_size = ' ' . split(&guifont, ' ')[-1]
+    call map(list, "substitute(substitute(v:val, '^.*: ', '', ''), '[:,].*', '', '') . l:font_size")
   else
     echoerr 'Your environment does not support the current version of unite-font.'
     finish
