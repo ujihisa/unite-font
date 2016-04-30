@@ -42,6 +42,12 @@ function! s:unite_source.gather_candidates(args, context)
     finish
   endif
 
+  call sort(list)
+  if exists('*uniq')
+    " Added around Vim 7.4.218
+    call uniq(list)
+  endif
+
   return map(list, '{
   \ "word": v:val,
   \ "source": "font",
